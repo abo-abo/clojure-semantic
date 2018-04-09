@@ -23,7 +23,7 @@
   :group 'wisent-clojure)
 
 (defvar wisent-clojure-defn-regexp (regexp-opt (append
-                                                '("defn" "defn-" 
+                                                '("defn" "defn-"
                                                   "defmulti" "defmethod" "defmacro"
                                                   "deftest"
                                                   "defmacro-"
@@ -89,7 +89,7 @@ It ignores whitespaces, newlines and comments."
   wisent-clojure-lex-reader
   wisent-clojure-lex-defproject
   wisent-clojure-lex-deffunc
-  wisent-clojure-lex-defvar 
+  wisent-clojure-lex-defvar
   wisent-clojure-lex-clj-symbol
   ;;;; Auto-generated analyzers.
   wisent-clojure-wy--<number>-regexp-analyzer
@@ -108,3 +108,4 @@ It ignores whitespaces, newlines and comments."
 (add-to-list 'semantic-new-buffer-setup-functions
         (cons 'clojure-mode 'wisent-clojure-default-setup))
 
+(provide 'clojure-semantic)

@@ -1,6 +1,6 @@
 ;;; clojure-wy.el --- Generated parser support file
 
-;; Copyright (C) 
+;; Copyright (C)
 
 ;; Author: Pierre Allix <pierre.allix@fokus.fraunhofer.de>
 ;; Created: 2013-03-22 13:33:00+0100
@@ -43,7 +43,37 @@
   (semantic-lex-make-keyword-table 'nil 'nil)
   "Table of language keywords.")
 
-(defconst wisent-clojure-wy--token-table
+(defun semantic-lex-make-type-table (specs &optional propspecs)
+  (let* ((semantic-lex-types-obarray (make-vector 13 0))
+         spec type tokens token alist default)
+    ;; fill it with stuff
+    (while specs
+      (setq spec (car specs)
+            specs (cdr specs)
+            type (car spec)
+            tokens (cdr spec)
+            default nil
+            alist nil)
+      (while tokens
+        (setq token (car tokens)
+              tokens (cdr tokens))
+        (if (cdr token)
+            (setq alist (cons token alist))
+          (setq token (car token))
+          (setq default token)))
+      ;; Ensure the default matching spec is the first one.
+      (semantic-lex-type-set type (cons default (nreverse alist))))
+    ;; Install useful default types & properties
+    (semantic-lex-preset-default-types)
+    ;; Apply all properties
+    (while propspecs
+      (setq spec (car propspecs)
+            propspecs (cdr propspecs))
+      ;; Create the type if necessary.
+      (semantic-lex-type-put (car spec) (nth 1 spec) (nth 2 spec) t))
+    semantic-lex-types-obarray))
+
+(defvar wisent-clojure-wy--token-table
   (semantic-lex-make-type-table
    '(("<no-type>"
       (UNREADABLE_READER)
